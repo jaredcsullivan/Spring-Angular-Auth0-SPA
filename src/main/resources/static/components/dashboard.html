@@ -1,0 +1,106 @@
+<div class="container">
+<hr/>
+<span>Search</span>
+<input type="text" ng-change="refreshSlider()" ng-model="keyword">
+<div class="swiper-container">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+        <!-- Slides  -->
+        <div ng-repeat="lead in filteredLeads = (leads | filter: keyword) track by $index" endRepeat class="swiper-slide">
+			<div class="row">
+    			<div class="col-sm-3"></div>
+    			<div class="col-sm-6 jumbotron">
+    				<span editable-text="lead.firstName" onaftersave="updateLead(lead)" 
+    			    e-label="First Name">{{ lead.firstName || 'empty' }}</span>
+    			    <span editable-text="lead.lastName" onaftersave="updateLead(lead)" 
+    			    e-label="Last Name">{{ lead.lastName || 'empty' }}</span>
+    			    <br/>
+    			    <br/>
+    			    <span editable-text="lead.companyName" onaftersave="updateLead(lead)" 
+    			    e-label="Company">{{ lead.companyName || 'empty' }}</span>
+    			    <br/>
+    			    <br/>
+    			    <span editable-text="lead.jobTitle" onaftersave="updateLead(lead)" 
+    			    e-label="Job Title">{{ lead.jobTitle || 'empty' }}</span>
+      				<br/>
+    			    <br/>      				
+    			    <span editable-text="lead.emailAddress" onaftersave="updateLead(lead)" 
+    			    e-label="Email">{{ lead.emailAddress || 'empty' }}</span>
+      				<br/>
+    			    <br/>      				
+    			    <span editable-text="lead.phoneNumber" onaftersave="updateLead(lead)" 
+    			    e-label="Phone">{{ lead.phoneNumber || 'empty' }}</span>
+    			</div>
+    			<div class="col-sm-3"></div>
+  			</div>
+        </div>
+    </div>
+
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+    <div class="swiper-pagination"></div>
+</div>
+    <div style="text-align:center"><span ng-bind="activeSlide"></span>/{{ filteredLeads.length }}</div>
+    <div style="text-align:center; margin-top:2px">
+    	<button  type="button" class="btn btn-success" ng-click="openNewLeadModal()">New Lead</button>
+    	<button  type="button" class="btn btn-danger" ng-click="openDeleteLeadModal()">Delete</button>
+    	<!--  <div ng-show="$ctrl.selected">Selection from a modal: {{ $ctrl.selected }}</div> -->
+ 	</div>
+</div>
+
+<script type="text/ng-template" id="newLeadModal.html">
+ 	  <form ng-submit="createLead()" name="myForm" class="my-form">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title">Create a new lead:</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+  			 <div class="form-group">
+    			<label for="firstName">First Name</label>
+    			<input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter first name" ng-model="firstName" required>
+  			</div>
+  			 <div class="form-group">
+    			<label for="lastName">Last Name</label>
+    			<input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter last name" ng-model="lastName" required>
+  			</div>
+  			<div class="form-group">
+    			<label for="emailAddress">Email address</label>
+    			<input type="email" class="form-control" id="emailAddress" name="emailAddress" placeholder="Enter email" ng-model="emailAddress" required>
+  			</div>
+  			 <div class="form-group">
+    			<label for="companyName">Company</label>
+    			<input type="text" class="form-control" id="companyName" name="companyName" placeholder="Enter company name" ng-model="companyName" required>
+  			</div>
+  			 <div class="form-group">
+    			<label for="jobTitle">Title</label>
+    			<input type="text" class="form-control" id="jobTitle" name="jobTitle" placeholder="Enter job title" ng-model="jobTitle" required>
+  			</div>
+  			<div class="form-group">
+    			<label for="phoneNumber">Phone number</label>
+    			<input type="text" class="form-control" id="phoneNumber" name="phoneNumber" ng-model="phoneNumber" ui-mask="(999) 999-9999" required>
+  			</div>
+  				<span class="error" ng-show="myForm.input.$error.required">Required!</span><br>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-success" type="submit" id="submit">Create</button>
+            <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+        </div>
+ 	  </form>
+    </script>
+    <script type="text/ng-template" id="deleteLeadModal.html">
+        <div class="modal-body">
+            <h3 class="modal-title" id="modal-title">Are sure you want to delete {{ $ctrl.selected.lead.firstName }} {{ $ctrl.selected.lead.lastName }} from your list of leads?</h3>
+        </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-danger" type="button" ng-click="$ctrl.delete()">Delete</button>
+            <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+        </div>
+    </script>
+
+<style>
+.swiper-container {
+    width: 600px;
+    height: 310px;
+} 
+</style>
