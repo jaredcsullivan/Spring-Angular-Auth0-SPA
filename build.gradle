@@ -1,0 +1,48 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:1.3.5.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'spring-boot'
+
+jar {
+    baseName = 'springdemo'
+    version =  '0.1.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    //compile("javax.servlet:jstl")
+    //compile("org.springframework.boot:spring-boot-starter-tomcat")
+    //compile("org.apache.tomcat.embed:tomcat-embed-jasper")
+    //compile("org.springframework.boot:spring-boot-starter-actuator")
+    //compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-web")
+    //compile("org.springframework.boot:spring-boot-starter-data-rest")
+    compile("org.springframework.boot:spring-boot-starter-data-mongodb")
+    //compile("org.springframework.boot:spring-boot-configuration-processor")
+    //compile("org.springframework.security:spring-security-taglibs")
+    //compile("com.auth0:auth0-spring-security-mvc:1.1.0")
+    compile("com.auth0:auth0-spring-security-api:0.3.0")
+    //compile("com.auth0:auth0-servlet:3.3.0")
+    //compile("com.auth0:mvc-auth-commons:0.1.0")
+    
+    testCompile("junit:junit")
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
